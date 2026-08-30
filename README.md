@@ -11,7 +11,7 @@
 - Python 包名：`glassmachine`
 - 当前状态：M0 可信仿真闭环完成（pre-alpha）
 
-## 快速开始
+## 快速开始（Quick Start）
 
 核心包没有运行时第三方依赖：
 
@@ -36,7 +36,7 @@ glassmachine gui
 PYTHONPATH=src python -m glassmachine verify
 ```
 
-## 文档导航
+## 文档导航（Documentation Guide）
 
 项目文档以中文为主；代码标识符、命令、格式字段和通用技术缩写保持原样。
 
@@ -47,7 +47,7 @@ PYTHONPATH=src python -m glassmachine verify
 - [ADR 0001：确定性事件内核](docs/decisions/0001-deterministic-event-kernel.md)
 - [M0 验证报告](docs/validation/m0.md)
 
-## 愿景
+## 愿景（Vision）
 
 GlassMachine 是一个 Python-first 的可执行计算系统实验室。项目从晶体管、逻辑门、加法器和寄存器出发，逐步构造 ALU、CPU 与完整的小型计算机，再继续展开 Cache、DRAM、虚拟内存、SSD、并行计算、通信互联、矩阵加速器与 Attention。
 
@@ -57,7 +57,7 @@ GlassMachine 是一个 Python-first 的可执行计算系统实验室。项目�
 
 GLASS 不以复刻某款商业处理器为目标，也不以堆砌尽可能多的晶体管为目标。我们追求的是**行为真实、因果可见、结果可验证、实验可复现**。
 
-## 核心目标
+## 核心目标（Core Goals）
 
 1. **Grounded — 有依据**  
    每个重要结果都应有数学定义、参考模型、外部工具或真实测量作为 ground truth；不能以“动画看起来合理”代替正确性。
@@ -74,7 +74,7 @@ GLASS 不以复刻某款商业处理器为目标，也不以堆砌尽可能多�
 5. **Progressively complete — 逐步完备**  
    前一阶段验证过的组件成为后一阶段的真实基础。系统从局部生长成整体，旧模型同时保留为入门模式和正确性基准。
 
-## 项目要达到的体验
+## 项目要达到的体验（Target Experience）
 
 用户应当能够：
 
@@ -99,7 +99,7 @@ GLASS 不以复刻某款商业处理器为目标，也不以堆砌尽可能多�
 可视化与调试       自动验证
 ```
 
-## 多模型架构
+## 多模型架构（Multi-model Architecture）
 
 关键组件可以拥有三个相互独立、接口一致的模型：
 
@@ -109,7 +109,7 @@ GLASS 不以复刻某款商业处理器为目标，也不以堆砌尽可能多�
 
 它们对相同输入进行差分验证。整机可以使用快速模型运行；当用户钻取某次操作时，系统使用该操作的真实边界输入在详细模型中重放，并再次与参考结果比较。
 
-## 技术方向
+## 技术方向（Technical Direction）
 
 GlassMachine 以 Python 为主要实现与扩展语言：
 
@@ -122,7 +122,7 @@ GlassMachine 以 Python 为主要实现与扩展语言：
 
 RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache controller、互联 router 和加速器局部，但不会强迫整个系统都采用 RTL。Memory 系统、通信互联和大型工作负载更适合 Python 离散事件模型。
 
-## 发展路线
+## 发展路线（Roadmap）
 
 ### M0 — 可审计仿真基础
 
@@ -179,7 +179,7 @@ RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache 
 - 参考框架 logits 对照；
 - 整体采用张量级快速执行，选中局部可钻取到周期、RTL、门或晶体管。
 
-## 验证策略
+## 验证策略（Validation Strategy）
 
 GLASS 使用多层 ground truth：
 
@@ -197,7 +197,7 @@ GLASS 使用多层 ground truth：
 
 每个核心模块在完成前必须具备：规格、参考模型、详细或结构模型、测试、轨迹、可视化、边界说明和验证记录。
 
-## 项目边界
+## 项目边界（Scope Boundaries）
 
 GLASS 明确不以以下内容为近期目标：
 
@@ -211,7 +211,7 @@ GLASS 明确不以以下内容为近期目标：
 
 晶体管层用于理解和验证重要局部，而不是承载整个系统。GLASS 追求的是**语义真实高于几何写实**。
 
-## 重造轮子的原则
+## 重造轮子的原则（Principles for Reimplementation）
 
 我们接受为了理解而重新实现已有机制，但不以“所有代码原创”为目标：
 
@@ -219,6 +219,6 @@ GLASS 明确不以以下内容为近期目标：
 
 参考已有项目时，应记录：学习了什么、采用了什么、为什么与原项目不同、保留和舍弃了哪些语义、ground truth 是什么。直接引用代码时必须遵守许可证并保留来源。
 
-## 当前阶段
+## 当前阶段（Current Milestone）
 
 M0 已建立输入、仿真、事件、调试、可视化、验证与重放的可信闭环，并形成了 [M0 完成与验收报告](docs/milestones/m0-completion-report.md)。下一阶段进入 M1：加入基础门、全加器、参数化多位加法器和寄存器，并为选中的晶体管局部接入 SPICE 第三方验证。

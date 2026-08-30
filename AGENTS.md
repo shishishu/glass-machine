@@ -1,8 +1,8 @@
-# AGENTS.md：GlassMachine 工程记忆
+# AGENTS.md：GlassMachine 工程记忆（Engineering Memory）
 
 本文件是 GlassMachine 的长期工程记忆，适用于整个仓库。
 
-## 产品标识
+## 产品标识（Product Identity）
 
 - 产品名：**GlassMachine**
 - 标语：**From Bit to Attention**
@@ -12,7 +12,7 @@
 - 许可证：MIT
 - 不使用容易与 General Motors 混淆的 `GM`，统一简称为 `GLASS`。
 
-## 使命
+## 使命（Mission）
 
 构建一个 Python-first、可执行、可审计的计算系统实验室：从局部晶体管与逻辑门开始，逐步生长为完整的小型计算机，再扩展到存储层级、并行计算、通信互联、加速器、Attention 和微型 Transformer。
 
@@ -20,14 +20,15 @@
 
 > 数据从哪里来，现在在哪里，为什么移动，正在等待什么，在哪里计算，以及改变体系结构后会发生什么？
 
-## 文档语言
+## 文档语言（Documentation Language）
 
 - 项目文档原则上以中文为主，中文是设计、验证、结论和边界说明的主要表达语言。
+- 文档标题（`#`）和一级章节标题（`##`）采用“中文（English）”双语形式，避免中文术语造成歧义；品牌名、标准缩写或本身已经清晰的英文标题无需生硬重复。
 - 专业术语第一次出现时可写作“中文（English）”，后续根据可读性使用中文或业界通用缩写。
 - 代码标识符、CLI 命令、文件格式字段、协议字面量和第三方工具名称保持原样，不为中文化破坏可执行性或可检索性。
 - 引用的外部论文、规范和工具文档可以保留原标题，但项目自身的采用理由与结论必须用中文说明。
 
-## 不可妥协的原则
+## 不可妥协的原则（Non-negotiable Principles）
 
 1. **仿真是事实来源，可视化不是。**
    - UI 操作调用仿真 API。
@@ -74,7 +75,7 @@
    - 重造前记录学习问题、项目特有需求、抽象边界、ground truth 和停止点。
    - 遵守许可证，并记录复制或改编代码的来源。
 
-## 建模层级与推荐工具
+## 建模层级与推荐工具（Modeling Layers and Recommended Tools）
 
 - 局部晶体管层：SPICE／ngspice 适配器；不自行实现通用 SPICE 求解器。
 - 数字逻辑与 RTL 层：Python 结构模型、PyRTL 和／或少量 Verilog；必要时使用外部 HDL 仿真器交叉验证。
@@ -86,7 +87,7 @@
 
 RTL 是可选择的细节层，不是全系统的统一表示。它适合加法器、寄存器、ALU、数据通路、控制器、Cache controller、router 和加速器局部逻辑；不默认用于 SSD 行为、OS 分页、完整 LLM 或模拟晶体管行为。
 
-## 架构隔离
+## 架构隔离（Architectural Separation）
 
 依赖方向必须清晰：
 
@@ -111,7 +112,7 @@ simulation core must not depend on visualization
 - 渲染与动画；
 - 实验配置与报告。
 
-## 验证要求
+## 验证要求（Validation Requirements）
 
 每个层级使用实际可行的最强验证方法：
 
@@ -136,7 +137,7 @@ simulation core must not depend on visualization
 
 未经校准，不得声称模型具有真实硬件的时序精度。
 
-## 核心模块完成标准（Definition of Done）
+## 核心模块完成标准（Definition of Done for Core Modules）
 
 核心模块在适用情况下必须具备：
 
@@ -151,7 +152,7 @@ simulation core must not depend on visualization
 - 当可视化属于范围时，由同一真实轨迹驱动的可视化；
 - 来源与许可证记录。
 
-## 初始路线约束
+## 初始路线约束（Initial Roadmap Constraints）
 
 1. M0 建立确定性仿真、事件、轨迹、重放、验证和最小可视化界面。
 2. M0 使用 NOT 验证基础设施闭环；M1 第一个面向体系结构学习的完整垂直切片是一位全加器：支持任意输入、透明传播、轨迹捕获和 Reference／Detailed／Fast 三模型比较。
@@ -160,7 +161,7 @@ simulation core must not depend on visualization
 5. 8 位 CPU 是标量正确性基线和未来加速器的控制核心，不是永久的全局宽度限制。
 6. 随后依次扩展 Memory hierarchy、并行与互联、矩阵加速和 Attention。
 
-## 范围边界
+## 范围边界（Scope Boundaries）
 
 近期范围不扩展为：
 
@@ -176,7 +177,7 @@ simulation core must not depend on visualization
 
 晶体管细节用于理解和支撑选定的局部机制。语义真实优先于几何写实。
 
-## 工程实践
+## 工程实践（Engineering Practices）
 
 - 仿真核心保持无界面、确定性。
 - 核心 API 优先使用明确的类型化数据结构，避免无结构字典。

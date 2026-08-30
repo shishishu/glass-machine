@@ -1,8 +1,8 @@
-# GlassMachine 文档
+# GlassMachine 文档（Documentation）
 
 项目文档以中文为主。代码标识符、命令、格式字段、标准缩写和第三方工具名称保持原样，必要时在第一次出现处给出中英文对照。
 
-## 阅读顺序
+## 阅读顺序（Reading Order）
 
 1. [项目首页与路线图](../README.md)
 2. [M0 完成与验收报告](milestones/m0-completion-report.md)
@@ -11,7 +11,7 @@
 5. [ADR 0001：确定性事件内核](decisions/0001-deterministic-event-kernel.md)
 6. [M0 验证报告](validation/m0.md)
 
-## 文档职责
+## 文档职责（Documentation Responsibilities）
 
 - `architecture/`：说明系统结构、职责边界和数据流。
 - `specifications/`：定义可测试的输入、输出、状态和错误语义。
