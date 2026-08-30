@@ -9,7 +9,32 @@
 - 简称：**GLASS**
 - 仓库名：`glass-machine`
 - Python 包名：`glassmachine`
-- 当前状态：设计与基础设施阶段（pre-alpha）
+- 当前状态：M0 可信仿真闭环完成（pre-alpha）
+
+## 快速开始
+
+核心包没有运行时第三方依赖：
+
+```bash
+python -m pip install -e .
+glassmachine verify
+glassmachine not --inputs 0,1,X,Z
+glassmachine replay experiments/m0-not.json
+```
+
+开发与可选 GUI：
+
+```bash
+python -m pip install -e ".[dev,gui]"
+pytest
+glassmachine gui
+```
+
+如果尚未安装 package，也可以直接运行：
+
+```bash
+PYTHONPATH=src python -m glassmachine verify
+```
 
 ## 愿景
 
@@ -90,11 +115,12 @@ RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache 
 
 ### M0 — 可审计仿真基础
 
-- 组件、端口、信号、时钟和事件模型；
-- 确定性执行、快照、回退和重放；
-- Reference/Detailed/Fast 模型契约；
-- 无界面运行与最小可视化画布；
-- 测试、差分验证和实验记录格式。
+- [x] 四态逻辑、显式位宽、组件、端口和信号契约；
+- [x] 确定性 `(time, delta, sequence)` 事件调度；
+- [x] 稳定态快照、事件级调试和重放；
+- [x] Reference/Detailed/Fast 模型契约与 NOT 三模型；
+- [x] 无界面 CLI 与可选 PySide6 最小可视化；
+- [x] 版本化 JSONL 轨迹、差分验证、测试和 CI。
 
 ### M1 — 从晶体管到寄存器
 
@@ -184,5 +210,4 @@ GLASS 明确不以以下内容为近期目标：
 
 ## 当前阶段
 
-项目即将从 M0 开始。近期目标是建立最小但可靠的仿真、事件、调试和验证闭环，然后完成第一个全加器垂直切片。
-
+M0 已建立输入、仿真、事件、调试、可视化、验证与重放的可信闭环。下一阶段进入 M1：加入基础门、全加器、参数化多位加法器和寄存器，并为选中的晶体管局部接入 SPICE 第三方验证。

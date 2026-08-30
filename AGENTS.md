@@ -9,6 +9,7 @@ This file is the persistent engineering memory for GlassMachine. It applies to t
 - Abbreviation: **GLASS** — **G**rounded, **L**ayered, **A**uditable **S**ystems **S**imulator
 - Repository: `glass-machine`
 - Python package: `glassmachine`
+- License: MIT
 - Do not abbreviate the project as `GM`; use `GLASS`.
 
 ## Mission
@@ -179,4 +180,3 @@ Use transistor detail to understand and ground selected local mechanisms. Prefer
 - Keep examples small enough to inspect and large enough to demonstrate the intended mechanism.
 - Optimize only after correctness and trace semantics are established; retain the clear implementation as a reference when adding a fast path.
 - Document design decisions that change a model's meaning, ground truth, preserved properties or scope.
-
