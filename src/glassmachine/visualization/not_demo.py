@@ -28,7 +28,8 @@ def run_not_demo(*, smoke: bool = False) -> int:
         )
     except ImportError as exc:  # pragma: no cover - depends on optional system GUI
         raise RuntimeError(
-            'PySide6 is required for the GUI; install with: pip install "glassmachine[gui]"'
+            'PySide6 and its system libraries are required for the GUI; install with: '
+            f'pip install "glassmachine[gui]". Import failed with: {exc}'
         ) from exc
 
     class NotWindow(QMainWindow):
