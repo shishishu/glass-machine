@@ -1,87 +1,94 @@
-# AGENTS.md
+# AGENTS.md：GlassMachine 工程记忆
 
-This file is the persistent engineering memory for GlassMachine. It applies to the entire repository.
+本文件是 GlassMachine 的长期工程记忆，适用于整个仓库。
 
-## Product identity
+## 产品标识
 
-- Product: **GlassMachine**
-- Tagline: **From Bit to Attention**
-- Abbreviation: **GLASS** — **G**rounded, **L**ayered, **A**uditable **S**ystems **S**imulator
-- Repository: `glass-machine`
-- Python package: `glassmachine`
-- License: MIT
-- Do not abbreviate the project as `GM`; use `GLASS`.
+- 产品名：**GlassMachine**
+- 标语：**From Bit to Attention**
+- 简称：**GLASS** — **G**rounded, **L**ayered, **A**uditable **S**ystems **S**imulator
+- 仓库名：`glass-machine`
+- Python 包名：`glassmachine`
+- 许可证：MIT
+- 不使用容易与 General Motors 混淆的 `GM`，统一简称为 `GLASS`。
 
-## Mission
+## 使命
 
-Build a Python-first, executable and auditable computer-systems laboratory that grows from transistor and gate-level local models into a complete small computer, then memory hierarchy, parallel computation, interconnects, accelerators, Attention and a tiny Transformer.
+构建一个 Python-first、可执行、可审计的计算系统实验室：从局部晶体管与逻辑门开始，逐步生长为完整的小型计算机，再扩展到存储层级、并行计算、通信互联、加速器、Attention 和微型 Transformer。
 
-The project is memory- and data-movement-centric. At every scale it should help answer:
+项目以 Memory 和数据移动为中心。在每个尺度上，都应帮助用户回答：
 
-> Where did this data come from, where is it now, why did it move, what is it waiting for, where is it computed, and what changes under another architecture?
+> 数据从哪里来，现在在哪里，为什么移动，正在等待什么，在哪里计算，以及改变体系结构后会发生什么？
 
-## Non-negotiable principles
+## 文档语言
 
-1. **Simulation is the source of truth; visualization is not.**
-   - UI actions call the simulation API.
-   - The simulator changes state and emits events.
-   - Visualization only renders state and events.
-   - Never mutate architectural state inside drawing or animation code.
+- 项目文档原则上以中文为主，中文是设计、验证、结论和边界说明的主要表达语言。
+- 专业术语第一次出现时可写作“中文（English）”，后续根据可读性使用中文或业界通用缩写。
+- 代码标识符、CLI 命令、文件格式字段、协议字面量和第三方工具名称保持原样，不为中文化破坏可执行性或可检索性。
+- 引用的外部论文、规范和工具文档可以保留原标题，但项目自身的采用理由与结论必须用中文说明。
 
-2. **Correctness must be independently grounded.**
-   - Important modules require an explicit specification and ground truth.
-   - Prefer an independent `ReferenceModel`, a transparent `DetailedModel`, and a scalable `FastModel` with the same contract.
-   - Differentially test the models; do not derive every model from the same implementation.
-   - External tools are welcome as additional oracles, not as unexplained authority.
+## 不可妥协的原则
 
-3. **Every meaningful change must be auditable.**
-   - State changes emit typed events with stable identity, time, source, destination, value and reason where applicable.
-   - Runs must be deterministic under the same code, configuration, inputs and seed.
-   - Experiments must be serializable and replayable.
-   - Validation failures should identify the first divergent state or event.
+1. **仿真是事实来源，可视化不是。**
+   - UI 操作调用仿真 API。
+   - 仿真器改变状态并产生事件。
+   - 可视化只渲染状态与事件。
+   - 禁止在绘图或动画代码中修改体系结构状态。
 
-4. **Layer detail; do not flatten or fake it.**
-   - Support collapse and drill-down across system, component, RTL/gate and selected transistor detail.
-   - Large simulations may use validated fast models.
-   - A selected operation can be replayed with its real boundary inputs in a detailed model.
-   - Explicitly document what each abstraction preserves and discards.
+2. **正确性必须有独立依据。**
+   - 重要模块必须具有明确规格和 ground truth。
+   - 优先提供接口一致、实现路径独立的 `ReferenceModel`、透明的 `DetailedModel` 和可扩展的 `FastModel`。
+   - 对多个模型做差分验证，不能让所有模型共享同一份核心算法后再互相证明。
+   - 外部工具可以作为额外 oracle，但不能成为无法解释的权威。
 
-5. **Python is the public control surface.**
-   - GUI and scripts use the same public simulation API.
-   - The core must run headlessly.
-   - Users must be able to define workloads, inspect state, add probes, run experiments and validate results from Python.
+3. **每次重要变化都必须可审计。**
+   - 状态变化产生有类型的事件；事件应按需携带稳定标识、时间、来源、目标、值和原因。
+   - 相同代码、配置、输入和随机种子必须产生确定性结果。
+   - 实验必须可序列化、可重放。
+   - 验证失败应指出第一个发生分歧的状态或事件。
 
-6. **Build progressively complete systems.**
-   - Earlier validated components should remain meaningful foundations or reference baselines.
-   - Do not create disconnected chapter demos that cannot participate in the growing system.
-   - Keep simpler models available for learning and comparison after more detailed models are added.
+4. **细节必须分层，不能压平或伪造。**
+   - 支持在系统、组件、RTL／门级和选定晶体管细节之间折叠与钻取。
+   - 大规模仿真可以使用已经验证的快速模型。
+   - 用户选中某次操作后，可以使用它的真实边界输入在详细模型中重放。
+   - 每层抽象必须明确记录保留了什么、舍弃了什么。
 
-7. **Memory and data movement are first-class.**
-   - Model addresses, values, transactions, capacity, latency, bandwidth, granularity and queues explicitly.
-   - Keep CPU data width, address width, memory transaction width, accelerator dtype and accumulator width independent.
-   - Do not model SSD as a level visited by every load; it participates through file I/O, paging or explicit storage operations.
+5. **Python 是公开控制界面。**
+   - GUI 和脚本使用同一套公开仿真 API。
+   - 核心必须支持无界面运行。
+   - 用户必须能通过 Python 定义工作负载、检查状态、添加探针、运行实验并验证结果。
 
-8. **Reimplement for understanding, reuse infrastructure.**
-   - It is appropriate to reimplement mechanisms central to the learning and visualization goals.
-   - Reuse GUI frameworks, test frameworks, numerical libraries, SPICE solvers and HDL simulators.
-   - Before reimplementing a mechanism, document the learning question, project-specific need, abstraction boundary, ground truth and stopping point.
-   - Respect licenses and record sources for copied or adapted code.
+6. **构造逐步完备的系统。**
+   - 前一阶段验证过的组件应成为后一阶段有意义的基础或参考基线。
+   - 不创建彼此割裂、无法进入最终系统的章节式 demo。
+   - 加入更详细模型后，仍保留简单模型用于学习、对照和验证。
 
-## Modeling layers and preferred tools
+7. **Memory 和数据移动是一等公民。**
+   - 显式建模地址、数值、事务、容量、延迟、带宽、粒度和队列。
+   - CPU 数据宽度、地址宽度、Memory 事务宽度、加速器 dtype 和累加宽度相互独立。
+   - SSD 不作为每次 load 都会访问的层级；它通过文件 I/O、分页或显式存储操作参与系统。
 
-- Transistor-local: SPICE/ngspice adapters; do not build a general SPICE solver.
-- Digital and RTL: Python structural models, PyRTL and/or limited Verilog; validate with an external HDL simulator when useful.
-- CPU and system: Python state machines and deterministic discrete-event simulation.
-- Memory and interconnect: Python transaction/event models with explicit timing and invariants.
-- Tensor and Attention: transparent Python implementations plus NumPy/PyTorch references.
-- Visualization: PySide6; it consumes traces and simulator state only.
-- Tests: pytest and property/exhaustive testing where practical.
+8. **为理解重造机制，为工程复用基础设施。**
+   - 对学习和可视化目标核心的机制，可以自行重新实现。
+   - GUI 框架、测试框架、数值库、SPICE 求解器和 HDL 仿真器应优先复用。
+   - 重造前记录学习问题、项目特有需求、抽象边界、ground truth 和停止点。
+   - 遵守许可证，并记录复制或改编代码的来源。
 
-RTL is a selected detail layer, not the universal representation. It is appropriate for adders, registers, ALUs, datapaths, controllers, cache controllers, routers and accelerator-local logic. It is not the default representation for SSD behavior, OS paging, an entire LLM or analog transistor behavior.
+## 建模层级与推荐工具
 
-## Architectural separation
+- 局部晶体管层：SPICE／ngspice 适配器；不自行实现通用 SPICE 求解器。
+- 数字逻辑与 RTL 层：Python 结构模型、PyRTL 和／或少量 Verilog；必要时使用外部 HDL 仿真器交叉验证。
+- CPU 与系统层：Python 状态机和确定性离散事件仿真。
+- Memory 与互联层：具有明确时序和不变量的 Python 事务／事件模型。
+- 张量与 Attention 层：透明 Python 实现，加上 NumPy／PyTorch 参考结果。
+- 可视化：PySide6，只消费轨迹和仿真状态。
+- 测试：pytest；在可行范围内使用属性测试和穷举测试。
 
-Maintain clear dependency direction:
+RTL 是可选择的细节层，不是全系统的统一表示。它适合加法器、寄存器、ALU、数据通路、控制器、Cache controller、router 和加速器局部逻辑；不默认用于 SSD 行为、OS 分页、完整 LLM 或模拟晶体管行为。
+
+## 架构隔离
+
+依赖方向必须清晰：
 
 ```text
 visualization  ─┐
@@ -91,92 +98,92 @@ validation     ─┘
 simulation core must not depend on visualization
 ```
 
-Keep these concerns separate:
+下列职责应保持分离：
 
-- immutable specifications and contracts;
-- architectural state;
-- microarchitectural state;
-- event/time progression;
-- reference semantics;
-- tracing, snapshots and replay;
-- debugging controls;
-- validation and invariants;
-- rendering and animation;
-- experiment configuration and reports.
+- 不可变规格与契约；
+- 体系结构状态；
+- 微体系结构状态；
+- 事件与时间推进；
+- 参考语义；
+- 轨迹、快照与重放；
+- 调试控制；
+- 验证与不变量；
+- 渲染与动画；
+- 实验配置与报告。
 
-## Validation requirements
+## 验证要求
 
-Use the strongest practical validation for each layer:
+每个层级使用实际可行的最强验证方法：
 
-- exhaustive truth tables for small Boolean components;
-- exhaustive or property-based arithmetic tests for small-width datapaths;
-- explicit transition tests for sequential state;
-- independent ISA interpreter and instruction-boundary comparison for the CPU;
-- bus-driver, width, request-lifecycle and protocol invariants during simulation;
-- independent cache/reference models and fixed access traces;
-- coherence litmus tests for multicore behavior;
-- SPICE cross-checks for selected transistor circuits;
-- PyRTL/Verilog simulation for selected RTL blocks;
-- NumPy/PyTorch comparisons with declared dtype, rounding and tolerance for tensor computations;
-- fixed weights, inputs and seeds for Transformer regression tests.
+- 小型布尔组件：穷举真值表；
+- 小位宽数据通路：穷举或属性化算术测试；
+- 时序状态：明确的状态转移测试；
+- CPU：独立 ISA 解释器和指令边界状态比较；
+- 仿真过程中持续检查总线驱动、位宽、请求生命周期和协议不变量；
+- Cache／Memory：独立参考模型和固定访问轨迹；
+- 多核：一致性 litmus tests；
+- 局部晶体管电路：SPICE 交叉验证；
+- 选定 RTL 模块：PyRTL／Verilog 仿真；
+- 张量计算：声明 dtype、舍入和容差后，与 NumPy／PyTorch 比较；
+- Transformer 回归：固定权重、输入和随机种子。
 
-Distinguish claims carefully:
+必须区分不同强度的结论：
 
-- functional truth: result matches the specification;
-- protocol truth: transitions satisfy stated rules;
-- model timing truth: execution follows declared latency/bandwidth parameters;
-- hardware realism: requires measurement and calibration against a named real system.
+- **功能真实**：结果符合规格；
+- **协议真实**：状态转移满足已声明规则；
+- **模型时序真实**：执行符合模型声明的延迟和带宽参数；
+- **硬件现实性**：需要与明确命名的真实系统进行测量和校准。
 
-Never claim real-hardware timing accuracy without calibration.
+未经校准，不得声称模型具有真实硬件的时序精度。
 
-## Definition of done for a core module
+## 核心模块完成标准（Definition of Done）
 
-A core module is not complete until it has, as applicable:
+核心模块在适用情况下必须具备：
 
-- a written specification and public contract;
-- stated assumptions and abstraction losses;
-- a ground-truth source;
-- a reference implementation independent of the detailed implementation;
-- tests covering normal, boundary and invalid behavior;
-- deterministic trace events;
-- validation or differential comparison;
-- a headless experiment or reproducible test vector;
-- visualization driven by the same real trace, when visualization is in scope;
-- documentation of sources and licenses.
+- 书面规格与公开契约；
+- 假设条件与抽象损失说明；
+- 明确的 ground truth 来源；
+- 与详细实现相互独立的参考实现；
+- 覆盖正常、边界和非法行为的测试；
+- 确定性的轨迹事件；
+- 验证或差分比较；
+- 无界面实验或可复现测试向量；
+- 当可视化属于范围时，由同一真实轨迹驱动的可视化；
+- 来源与许可证记录。
 
-## Initial roadmap constraints
+## 初始路线约束
 
-1. M0 establishes deterministic simulation, events, traces, replay, validation and a minimal visual surface.
-2. The first vertical slice is a one-bit full adder with arbitrary inputs, transparent propagation, trace capture and reference/detailed/fast comparison.
-3. Grow through multi-bit adder and register into a complete small CPU.
-4. Design a small project-specific ISA only when entering the CPU/control milestone. Specify semantics before binary encoding, and provide an independent interpreter.
-5. The 8-bit CPU is a scalar correctness baseline and future accelerator control plane, not a permanent global width restriction.
-6. Expand next into memory hierarchy, then parallelism/interconnect, then matrix acceleration and Attention.
+1. M0 建立确定性仿真、事件、轨迹、重放、验证和最小可视化界面。
+2. M0 使用 NOT 验证基础设施闭环；M1 第一个面向体系结构学习的完整垂直切片是一位全加器：支持任意输入、透明传播、轨迹捕获和 Reference／Detailed／Fast 三模型比较。
+3. 从多位加法器和寄存器继续生长为完整的小型 CPU。
+4. 进入 CPU／控制里程碑时才设计项目专用的小型 ISA；先定义语义，再定义二进制编码，并提供独立解释器。
+5. 8 位 CPU 是标量正确性基线和未来加速器的控制核心，不是永久的全局宽度限制。
+6. 随后依次扩展 Memory hierarchy、并行与互联、矩阵加速和 Attention。
 
-## Scope boundaries
+## 范围边界
 
-Do not expand the near-term scope into:
+近期范围不扩展为：
 
-- a full transistor-level CPU;
-- physical chip layout or electromagnetic simulation;
-- literal per-electron simulation;
-- an exact clone of a commercial CPU/GPU;
-- a general EDA or arbitrary-Verilog visualization tool;
-- premature out-of-order execution, full operating systems or full RISC-V/x86 compatibility;
-- 3D construction as the primary interaction;
-- gate-level execution of a large LLM;
-- decorative animation that does not correspond to a simulation event.
+- 完整的晶体管级 CPU；
+- 物理版图或电磁仿真；
+- 逐电子模拟；
+- 商业 CPU／GPU 的精确复刻；
+- 通用 EDA 或任意 Verilog 可视化工具；
+- 过早实现乱序执行、完整操作系统或完整 RISC-V／x86 兼容；
+- 以 3D 建造作为主要交互形式；
+- 使用门级模型执行大型 LLM；
+- 与真实仿真事件无关的装饰性动画。
 
-Use transistor detail to understand and ground selected local mechanisms. Prefer semantic truth over geometric realism.
+晶体管细节用于理解和支撑选定的局部机制。语义真实优先于几何写实。
 
-## Engineering practices
+## 工程实践
 
-- Keep the simulation core headless and deterministic.
-- Prefer explicit typed data structures over unstructured dictionaries in core APIs.
-- Keep units and widths explicit; validate them at boundaries.
-- Make invalid states and unsupported behavior fail loudly.
-- Preserve user-visible experiment and trace compatibility deliberately; version formats.
-- Add a regression test for every fixed bug.
-- Keep examples small enough to inspect and large enough to demonstrate the intended mechanism.
-- Optimize only after correctness and trace semantics are established; retain the clear implementation as a reference when adding a fast path.
-- Document design decisions that change a model's meaning, ground truth, preserved properties or scope.
+- 仿真核心保持无界面、确定性。
+- 核心 API 优先使用明确的类型化数据结构，避免无结构字典。
+- 单位和位宽必须显式，并在边界处验证。
+- 非法状态和不支持的行为应明确失败。
+- 谨慎维护用户可见实验与轨迹格式的兼容性，并对格式做版本管理。
+- 每个修复的缺陷都应增加回归测试。
+- 示例应小到可以检查，同时足以展示目标机制。
+- 在正确性和轨迹语义确定后再优化；加入快速路径时保留清晰实现作为参考。
+- 改变模型含义、ground truth、保留属性或范围边界的设计决策必须形成文档。

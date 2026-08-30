@@ -1,33 +1,59 @@
-# Digital logic specification v1
+# 数字逻辑规范 v1
 
-## Values
+本规范定义 M0 可执行模型的逻辑值、向量、NOT 语义和驱动约束。它描述数字抽象，不描述连续电压。
 
-M0 uses four explicit states:
+## 四态逻辑值
 
-- `0`: driven logical low;
-- `1`: driven logical high;
-- `X`: unknown or conflicting logical value;
-- `Z`: undriven/high-impedance value.
+M0 使用四个显式状态：
 
-Vectors are non-empty, explicitly sized and written most-significant bit first. Width mismatches are
-errors; GlassMachine does not silently truncate or extend values.
+- `0`：被驱动的逻辑低电平；
+- `1`：被驱动的逻辑高电平；
+- `X`：未知、未初始化或发生冲突后无法确定的逻辑值；
+- `Z`：未驱动／高阻态（high impedance）。
 
-## NOT
+`X` 不是第三种稳定逻辑电平，`Z` 也不是可直接参与布尔运算的普通数值。二者的作用是让“不知道”和“没有驱动”在模型中显式暴露，避免悄悄把异常当作 `0` 或 `1`。
 
-The M0 ground-truth table is:
+## 逻辑向量与位宽
 
-| Input | Output |
-| --- | --- |
-| `0` | `1` |
-| `1` | `0` |
-| `X` | `X` |
-| `Z` | `X` |
+- 向量不能为空；
+- 位宽必须显式；
+- 文本表示按最高有效位在前（MSB-first）书写；
+- 位宽不匹配是错误；
+- GlassMachine 不静默截断，也不自动扩展。
 
-`Z` becomes `X` because an undriven input does not establish a known Boolean level. This is a
-digital abstraction, not a transistor-voltage claim.
+M0 的 NOT 示例宽度为 1 位，但底层逻辑向量并没有把整个项目锁定为 1 位或 8 位。后续 CPU 数据宽度、地址宽度、Memory 事务宽度和加速器数值类型将分别声明。
 
-## Drivers
+## NOT 语义
 
-M0 permits exactly one registered driver per signal. External input signals are driven by the
-experiment API. Multiple-driver resolution is intentionally deferred; attempting to register a
-second driver fails during circuit construction.
+M0 的 ground truth 真值表为：
+
+| 输入 | 输出 | 解释 |
+| --- | --- | --- |
+| `0` | `1` | 已知低电平取反 |
+| `1` | `0` | 已知高电平取反 |
+| `X` | `X` | 未知输入无法产生已知输出 |
+| `Z` | `X` | 未驱动输入没有建立可确定的布尔电平 |
+
+其中 `Z → X` 是数字模型语义，不是对晶体管节点电压的声明。实际悬空节点如何变化，需要器件模型、寄生参数和 SPICE 瞬态仿真支撑。
+
+## 驱动规则
+
+M0 中每个信号只允许注册一个驱动者：
+
+- 外部输入由实验 API 驱动；
+- 组件输出由对应组件端口驱动；
+- 构造电路时注册第二个驱动者会立即失败；
+- M0 不尝试解析多个驱动者之间的竞争。
+
+多驱动解析表、三态总线和冲突产生 `X` 的规则将在确实引入总线时单独规范，不能仅凭四态值已经存在就声称完成。
+
+## 错误语义
+
+以下情况必须明确报错，不能静默修复：
+
+- 输入包含 `0`、`1`、`X`、`Z` 之外的字符；
+- 构造空向量；
+- 端口与信号位宽不一致；
+- 重复注册信号或组件；
+- 为单驱动信号注册第二个驱动者；
+- 事件超过配置预算而无法达到稳定态。

@@ -1,24 +1,49 @@
-# ADR 0001: deterministic event kernel
+# ADR 0001：确定性事件内核
 
-- Status: accepted
-- Date: 2026-08-30
+- 状态：已接受
+- 日期：2026-08-30
 
-## Context
+## 背景
 
-GlassMachine needs causal visualization, event-level debugging, stable replay and later support for
-gate delay, clocks, memory requests and interconnect traffic. Direct recursive updates would make
-results depend on Python call order and would not provide a durable audit trail.
+GlassMachine 需要因果可视化、事件级调试、稳定重放，并在后续支持门延迟、时钟、Memory 请求和互联流量。若采用直接递归更新，结果容易受到 Python 调用顺序影响，也无法自然产生持久、可审计的执行轨迹。
 
-## Decision
+## 决策
 
-Use a central discrete-event kernel. Order scheduled work by integer `(time, delta, sequence)` and
-emit an immutable event only after a value change commits. Components are pure with respect to
-simulation state. Visualization consumes the resulting trace.
+使用中央离散事件内核：
 
-## Consequences
+- 所有待处理事件按整数 `(time, delta, sequence)` 排序；
+- 只有在信号值真正提交变化之后才产生不可变轨迹事件；
+- 组件相对于仿真状态是纯计算，只返回拟议输出；
+- 仿真内核是状态的唯一所有者；
+- 可视化、调试和验证消费相同的公开状态与轨迹接口。
 
-- Runs are deterministic and replayable.
-- Zero-delay propagation is explicit through delta cycles.
-- Oscillation can be detected with a finite event budget.
-- Every state change has an event identity and causal parent.
-- The model is not yet calibrated to real physical time.
+## 被否决的方案
+
+### 直接递归传播
+
+实现较短，但调用栈和注册顺序会隐式决定传播顺序，不利于零延迟逻辑、断点、回放和未来时序组件。
+
+### 由 GUI 驱动状态
+
+容易制作动画，但无界面实验无法复用相同语义，界面也可能展示从未被仿真提交的状态，因此与项目“仿真是事实来源”的原则冲突。
+
+### 立即绑定真实时间单位
+
+没有器件、工艺或硬件校准依据时，将 tick 命名为纳秒会制造虚假的物理精度。M0 只承诺模型时间顺序和声明延迟。
+
+## 后果
+
+正面结果：
+
+- 相同输入能够产生确定且可重放的运行；
+- 通过 delta cycle 显式表示同一时刻内的零延迟传播；
+- 通过有限事件预算检测无法收敛的振荡；
+- 每次状态变化具有事件身份和因果父节点；
+- GUI 和无界面验证可以使用同一事实来源。
+
+代价与限制：
+
+- 所有新组件必须遵守事件和状态所有权契约；
+- 轨迹格式成为用户可见接口，需要版本管理；
+- 大规模模型将产生性能和轨迹体积压力，未来需要经过验证的 fast model 和可配置追踪；
+- 当前模型尚未与真实物理时间校准。

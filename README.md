@@ -36,6 +36,17 @@ glassmachine gui
 PYTHONPATH=src python -m glassmachine verify
 ```
 
+## 文档导航
+
+项目文档以中文为主；代码标识符、命令、格式字段和通用技术缩写保持原样。
+
+- [文档首页](docs/README.md)
+- [M0 完成与验收报告](docs/milestones/m0-completion-report.md)
+- [M0 架构：可信仿真闭环](docs/architecture/m0.md)
+- [数字逻辑规范 v1](docs/specifications/digital-logic.md)
+- [ADR 0001：确定性事件内核](docs/decisions/0001-deterministic-event-kernel.md)
+- [M0 验证报告](docs/validation/m0.md)
+
 ## 愿景
 
 GlassMachine 是一个 Python-first 的可执行计算系统实验室。项目从晶体管、逻辑门、加法器和寄存器出发，逐步构造 ALU、CPU 与完整的小型计算机，再继续展开 Cache、DRAM、虚拟内存、SSD、并行计算、通信互联、矩阵加速器与 Attention。
@@ -140,7 +151,7 @@ RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache 
 
 8 位 CPU 是完整的标量计算机、后续加速器的控制核心，也是所有优化版本的正确性基线；它不是项目永久的算力上限。数据宽度、地址宽度、传输宽度和累加宽度不得在底层接口中绑定。
 
-### M3 — Memory hierarchy
+### M3 — 存储层级（Memory hierarchy）
 
 - 理想内存、DRAM、L1 与多级 Cache；
 - Tag/Index/Offset、替换、写回与延迟；
@@ -154,14 +165,14 @@ RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache 
 - Bus、Crossbar、Ring、Mesh；
 - 队列、带宽、延迟、拥塞、背压、NUMA 与 DMA。
 
-### M5 — 矩阵计算与 Attention
+### M5 — 矩阵计算与注意力机制（Attention）
 
 - MAC、SIMD、PE Array / Systolic Array；
 - SRAM tile buffer、分块矩阵乘法与数据复用；
 - 真实 Q/K/V、Mask、Softmax 与 KV Cache；
 - Naive、Tiled 与 IO-aware Attention 的数值和数据移动对比。
 
-### M6 — 微型 Transformer / LLM
+### M6 — 微型 Transformer／LLM
 
 - 固定小型 tokenizer 与真实权重；
 - Prefill、自回归 Decode 与 KV Cache；
@@ -210,4 +221,4 @@ GLASS 明确不以以下内容为近期目标：
 
 ## 当前阶段
 
-M0 已建立输入、仿真、事件、调试、可视化、验证与重放的可信闭环。下一阶段进入 M1：加入基础门、全加器、参数化多位加法器和寄存器，并为选中的晶体管局部接入 SPICE 第三方验证。
+M0 已建立输入、仿真、事件、调试、可视化、验证与重放的可信闭环，并形成了 [M0 完成与验收报告](docs/milestones/m0-completion-report.md)。下一阶段进入 M1：加入基础门、全加器、参数化多位加法器和寄存器，并为选中的晶体管局部接入 SPICE 第三方验证。
