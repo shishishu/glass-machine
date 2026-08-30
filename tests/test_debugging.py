@@ -1,7 +1,7 @@
 import unittest
 
 from glassmachine.debugging.debugger import Breakpoint, Debugger
-from glassmachine.models.digital.not_gate import build_not_simulation
+from glassmachine.models.digital.detailed.not_gate import build_not_simulation
 
 
 class DebuggerTests(unittest.TestCase):

@@ -6,9 +6,9 @@ from dataclasses import dataclass
 
 from glassmachine.core.errors import ValidationError
 from glassmachine.core.logic import LogicValue, LogicVector
-from glassmachine.models.digital.not_gate import build_not_simulation
-from glassmachine.models.fast.not_gate import FastNot
-from glassmachine.models.reference.not_gate import ReferenceNot
+from glassmachine.models.digital.detailed.not_gate import build_not_simulation
+from glassmachine.models.digital.fast.not_gate import FastNot
+from glassmachine.models.digital.reference.not_gate import ReferenceNot
 
 
 @dataclass(frozen=True, slots=True)

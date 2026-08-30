@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from glassmachine.core.logic import LogicValue
-from glassmachine.models.digital.not_gate import build_not_simulation
+from glassmachine.models.digital.detailed.not_gate import build_not_simulation
 from glassmachine.trace.events import TraceEvent
 
 

@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from glassmachine.core.errors import ReplayMismatchError
-from glassmachine.models.digital.not_gate import build_not_simulation
+from glassmachine.models.digital.detailed.not_gate import build_not_simulation
 from glassmachine.trace.trace import Trace
 
 

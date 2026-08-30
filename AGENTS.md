@@ -77,6 +77,8 @@
 
 ## 建模层级与推荐工具（Modeling Layers and Recommended Tools）
 
+模型文件先按领域／抽象层组织，再按模型角色组织。例如数字逻辑使用 `models/digital/{reference,detailed,fast}/`。`Simulation` 等模型无关的执行基础设施保留在 `simulation/`，不得放入任何具体模型角色目录。
+
 - 局部晶体管层：SPICE／ngspice 适配器；不自行实现通用 SPICE 求解器。
 - 数字逻辑与 RTL 层：Python 结构模型、PyRTL 和／或少量 Verilog；必要时使用外部 HDL 仿真器交叉验证。
 - CPU 与系统层：Python 状态机和确定性离散事件仿真。

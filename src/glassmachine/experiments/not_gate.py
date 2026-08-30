@@ -9,7 +9,7 @@ from typing import Any, Self
 
 from glassmachine.core.errors import ConfigurationError, ReplayMismatchError
 from glassmachine.core.logic import LogicValue, LogicVector
-from glassmachine.models.digital.not_gate import build_not_simulation
+from glassmachine.models.digital.detailed.not_gate import build_not_simulation
 from glassmachine.simulation.engine import Snapshot
 from glassmachine.trace.trace import Trace
 

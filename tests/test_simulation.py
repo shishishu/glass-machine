@@ -3,7 +3,7 @@ import unittest
 from glassmachine.core.component import Component, Port, PortDirection
 from glassmachine.core.errors import ConfigurationError, SimulationError, UnstableSimulationError
 from glassmachine.core.logic import LogicVector
-from glassmachine.models.digital.not_gate import NotGate, build_not_simulation
+from glassmachine.models.digital.detailed.not_gate import NotGate, build_not_simulation
 from glassmachine.simulation.engine import Simulation
 
 

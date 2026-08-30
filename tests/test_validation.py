@@ -1,8 +1,8 @@
 import unittest
 
 from glassmachine.core.logic import LogicValue, LogicVector
-from glassmachine.models.fast.not_gate import FastNot
-from glassmachine.models.reference.not_gate import ReferenceNot
+from glassmachine.models.digital.fast.not_gate import FastNot
+from glassmachine.models.digital.reference.not_gate import ReferenceNot
 from glassmachine.validation.not_gate import validate_not_models
 
 

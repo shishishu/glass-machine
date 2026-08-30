@@ -98,7 +98,7 @@ M0 的目的不是先制造大量逻辑门，而是建立一个可信的最小�
 | 离散事件内核 | `src/glassmachine/simulation/engine.py` | 完成 |
 | 事件与轨迹 | `src/glassmachine/trace/` | 完成 |
 | 调试器 | `src/glassmachine/debugging/debugger.py` | 完成 |
-| NOT 三模型 | `src/glassmachine/models/{reference,digital,fast}/` | 完成 |
+| NOT 三模型 | `src/glassmachine/models/digital/{reference,detailed,fast}/` | 完成 |
 | 可复现实验 | `src/glassmachine/experiments/not_gate.py` | 完成 |
 | 固定实验记录 | `experiments/m0-not.json` | 完成 |
 | 差分验证 | `src/glassmachine/validation/not_gate.py` | 完成 |
