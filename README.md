@@ -22,6 +22,15 @@ glassmachine not --inputs 0,1,X,Z
 glassmachine replay experiments/m0-not.json
 ```
 
+连续输入使用固定传输延迟，支持输入间隔小于门延迟：
+
+```bash
+glassmachine not --inputs 1,0,1,0 --delay 3 --spacing 1
+glassmachine replay experiments/m0-not-short-pulse.json
+```
+
+规则与适用边界见 [固定传输延迟决策](docs/decisions/0002-fixed-transport-delay.md)。
+
 开发与可选 GUI：
 
 ```bash

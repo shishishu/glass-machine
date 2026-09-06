@@ -10,6 +10,7 @@
 4. [数字逻辑规范 v1](specifications/digital-logic.md)
 5. [ADR 0001：确定性事件内核](decisions/0001-deterministic-event-kernel.md)
 6. [M0 验证报告](validation/m0.md)
+7. [ADR 0002：固定传输延迟修正](decisions/0002-fixed-transport-delay.md)
 
 ## 文档职责（Documentation Responsibilities）
 

@@ -1,0 +1,16 @@
+{
+  "config": {
+    "delay": 3,
+    "steps": [
+      {"time": 0, "value": "1"},
+      {"time": 4, "value": "0"},
+      {"time": 5, "value": "1"},
+      {"time": 6, "value": "0"}
+    ]
+  },
+  "expected_output": "1",
+  "expected_trace_digest": "8811fd9a1a448e7e643f93c2fbf14934880e39d446f7b0284b2de38086d7cedb",
+  "kind": "not",
+  "schema": "glassmachine.experiment",
+  "version": 1
+}

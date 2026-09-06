@@ -49,7 +49,7 @@ class Snapshot:
 
 
 class Simulation:
-    """Owns all signal state and is the sole source of committed changes."""
+    """Own signal state and schedule fixed transport-delay combinational outputs."""
 
     SNAPSHOT_SCHEMA_VERSION = 1
 
@@ -282,8 +282,8 @@ class Simulation:
                 port.width, context=f"component {component.component_id!r}.{port_name}"
             )
             signal_name = component.bindings[port_name]
-            if self._get_signal(signal_name).value == parsed:
-                continue
+            # 保留每次求值的传输延迟输出。当前值相等不代表未来无需变化。
+            # 队列中可能还有其他输出。仅在 step() 提交时消除无变化事件。
             self._schedule_change(
                 kind=EventKind.SIGNAL_CHANGED,
                 signal=signal_name,
