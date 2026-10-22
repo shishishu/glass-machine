@@ -50,6 +50,7 @@ PYTHONPATH=src python -m glassmachine verify
 项目文档以中文为主；代码标识符、命令、格式字段和通用技术缩写保持原样。
 
 - [文档首页](docs/README.md)
+- [项目定位、AI PM 目标与 Agent 协作](docs/project-positioning.md)
 - [M0 完成与验收报告](docs/milestones/m0-completion-report.md)
 - [M0 架构：可信仿真闭环](docs/architecture/m0.md)
 - [数字逻辑规范 v1](docs/specifications/digital-logic.md)
