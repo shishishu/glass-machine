@@ -9,7 +9,7 @@
 - 简称：**GLASS**
 - 仓库名：`glass-machine`
 - Python 包名：`glassmachine`
-- 当前状态：M0 可信仿真闭环完成（pre-alpha）
+- 当前状态：M0 可信仿真闭环及 M1 首次交付（一位全加器）已实现（pre-alpha）；M1 后续模块尚未完成
 
 ## 快速开始（Quick Start）
 
@@ -21,6 +21,16 @@ glassmachine verify
 glassmachine not --inputs 0,1,X,Z
 glassmachine replay experiments/m0-not.json
 ```
+
+一位全加器入口：
+
+```bash
+glassmachine full-adder --a 1 --b 1 --cin 0
+glassmachine verify --model full-adder
+glassmachine replay experiments/m1-full-adder.json
+```
+
+安装下方 GUI 依赖后，运行 `glassmachine gui --model full-adder` 打开内部传播视图。
 
 连续输入使用固定传输延迟，支持输入间隔小于门延迟：
 
@@ -51,6 +61,7 @@ PYTHONPATH=src python -m glassmachine verify
 
 - [文档首页](docs/README.md)
 - [项目定位、AI PM 目标与 Agent 协作](docs/project-positioning.md)
+- [一位全加器实验：输入、单步与重放](docs/tutorials/full-adder.md)
 - [M0 完成与验收报告](docs/milestones/m0-completion-report.md)
 - [M0 架构：可信仿真闭环](docs/architecture/m0.md)
 - [数字逻辑规范 v1](docs/specifications/digital-logic.md)
@@ -154,6 +165,8 @@ RTL 会参与加法器、寄存器、ALU、CPU 数据通路、控制器、Cache 
 
 模块拆解、开发顺序与验证方法见 [M1 开发计划](docs/milestones/m1-development-plan.md)。该文档为计划，不表示 M1 已完成。
 
+首次交付 A+B+C 已实现基础门、半加器与一位全加器三模型，以及真实轨迹驱动的单步界面和实验重放。运行 `glassmachine gui --model full-adder` 开始体验；使用方法见[全加器实验](docs/tutorials/full-adder.md)，四态规则见[首次交付规格](docs/specifications/m1-combinational.md)。
+
 ### M2 — 完整的 8 位小型计算机
 
 - 运算器、控制器、存储器、输入和输出；
@@ -233,4 +246,4 @@ GLASS 明确不以以下内容为近期目标：
 
 ## 当前阶段（Current Milestone）
 
-M0 已建立输入、仿真、事件、调试、可视化、验证与重放的可信闭环，并形成了 [M0 完成与验收报告](docs/milestones/m0-completion-report.md)。下一阶段进入 M1：加入基础门、全加器、参数化多位加法器和寄存器，并为选中的晶体管局部接入 SPICE 第三方验证。
+M0 已建立可信仿真闭环，并形成了 [M0 完成与验收报告](docs/milestones/m0-completion-report.md)。M1 首次交付已实现基础门与一位全加器完整体验；后续继续参数化多位加法器、时序契约和寄存器，以及选定 RTL／SPICE 对照。首次交付不代表整个 M1 完成。

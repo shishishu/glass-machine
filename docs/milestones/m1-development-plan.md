@@ -2,7 +2,7 @@
 
 ## 状态与依据（Status and Basis）
 
-- 状态：开发计划，尚未实现或验收；本文示例与接口均用于说明设计。
+- 状态：总体开发计划；首次交付 A+B+C 已完成本地验收，见[第一次交付报告](m1-first-delivery-report.md)。其余内容仍为计划，实际接口以对应规格为准。
 - 整理日期：2026-10-26。
 - 基础：[M0 验收报告](m0-completion-report.md)、[数字逻辑规范](../specifications/digital-logic.md)、[固定传输延迟 ADR](../decisions/0002-fixed-transport-delay.md)。
 - 工作方式遵循[项目定位与 Agent 协作](../project-positioning.md)。本文不改变既有路线；接口与未决语义在对应模块实现前细化。

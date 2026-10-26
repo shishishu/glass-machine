@@ -52,4 +52,10 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 python_version = "3.12"
 strict = true
 files = ["src/glassmachine"]
-exclude = ["src/glassmachine/visualization/not_demo.py"]
+exclude = ["src/glassmachine/visualization/(not_demo|full_adder_demo)\\.py"]
+
+# Qt is optional in the core CI environment. The GUI job checks the M1 view
+# explicitly with PySide6 installed; the controller remains in the core check.
+[[tool.mypy.overrides]]
+module = ["glassmachine.visualization.not_demo", "glassmachine.visualization.full_adder_demo"]
+follow_imports = "skip"
